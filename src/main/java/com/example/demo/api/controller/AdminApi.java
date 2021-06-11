@@ -15,6 +15,12 @@ public class AdminApi {
     @Autowired
     private AdminService adminService;
 
+    @PostMapping("/login")
+    public ResponseEntity loginDto (@RequestBody UpdateAdmin dto ) {
+        System.out.println(dto.getPass_word());
+        return adminService.loginAdmin(dto);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity getOneApi(@PathVariable("id") Integer id) {
         return adminService.getOne(id);
@@ -27,9 +33,12 @@ public class AdminApi {
     public ResponseEntity getOneByUsername(@PathVariable("username") String username) {
         return adminService.getOneByUsername(username);
     }
+    @GetMapping("/abc")
+    public String getOneByUsername() {
+        return "abc";
+    }
     @PutMapping("/update/{id}")
-    public ResponseEntity updateAdminById(@PathVariable("id") Integer id, Dto update) {
-
+    public ResponseEntity updateAdminById(@PathVariable("id") Integer id, @RequestBody Dto update) {
         return adminService.updateAdmin(id,update);
     }
 

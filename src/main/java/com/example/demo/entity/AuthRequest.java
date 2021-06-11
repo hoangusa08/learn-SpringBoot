@@ -1,16 +1,14 @@
-package com.example.demo.api.dto;
+package com.example.demo.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dto {
+public class AuthRequest {
+
     private String username;
     private String password;
-
 }

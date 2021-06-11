@@ -22,7 +22,7 @@ public class AdminService {
     private AdminRepository adminRepository;
 
     @Transactional
-    public Page<Admin> findPage(Pageable pageable){
+    public List<Admin> findPage(Pageable pageable){
         return adminRepository.findAllAdmin();
     }
     @Transactional
@@ -32,6 +32,18 @@ public class AdminService {
         ad=admin.get();
         return ResponseEntity.ok(ad);
     }
+
+    @Transactional
+    public ResponseEntity loginAdmin(UpdateAdmin Dto) {
+        List<Admin> admin = adminRepository.findAllAdmin();
+        for ( Admin ad : admin) {
+            if( ad.getUser_name().equals(Dto.getUser_name()) && ad.getPass_word().equals(Dto.getPass_word())){
+                return ResponseEntity.ok(ad);
+            }
+        }
+        return ResponseEntity.ok("không đúng");
+    }
+
     @Transactional
     public ResponseEntity getAllAdmin() {
         List<Admin> admins=new ArrayList<>();
@@ -50,8 +62,8 @@ public class AdminService {
         Optional<Admin> optionalAdmin = adminRepository.findById(id);
         Admin Admintemp = new Admin();
         Admintemp = optionalAdmin.get();
-        Admintemp.setUser_name(update.getName());
-        Admintemp.setPass_word(update.getPass());
+        Admintemp.setUser_name(update.getUsername());
+        Admintemp.setPass_word(update.getPassword());
         try {
             adminRepository.save(Admintemp);
             return ResponseEntity.ok("ok la");
