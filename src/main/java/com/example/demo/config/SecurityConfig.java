@@ -47,9 +47,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/authenticate").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
-                .anyRequest().authenticated() // Tất cả các request khác đều cần phải xác thực mới được truy cập
-                .and()
+                .antMatchers("/authenticate").permitAll(); // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
+//                .anyRequest().authenticated() // Tất cả các request khác đều cần phải xác thực mới được truy cập
+//                .and()
+//                .exceptionHandling().and().sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests().antMatchers("/admin/**").hasAnyAuthority("admin", "user");
+        http.authorizeRequests().antMatchers("/one/**").hasAuthority( "user");
+        http.authorizeRequests().and()
                 .exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

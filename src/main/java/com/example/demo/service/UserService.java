@@ -32,4 +32,12 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public ResponseEntity getAll() {
+        return ResponseEntity.ok(userRepository.findAll());
+    }
+    @Transactional
+    public ResponseEntity getUserByName( String name) {
+        return ResponseEntity.ok(userRepository.findByUsername(name));
+    }
 }

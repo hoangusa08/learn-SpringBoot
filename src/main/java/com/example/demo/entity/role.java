@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity(name="role")
 @Table(name = "role")
-public class role {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
